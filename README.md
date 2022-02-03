@@ -7,7 +7,7 @@ The script matches the contents of the input text file against a set of allowed 
 
 Because bagit.py does not output an easy-to-read bag size apart from the Payload-Oxum, this script calculates the bag size and outputs the appropriate value and unit (TB, GB, MB, KB, or bytes).
 
-Default usage:
+Use <code>-b --baginfo</code>, followed by the path to a text file, to bag a directory and use that text file as the basis for the resulting bag's bag-info.txt file:
 
 <code>pybagger.py --baginfo <path_to_baginfo_txt_file></code>
 
