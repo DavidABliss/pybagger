@@ -7,17 +7,17 @@ The script matches the contents of the input text file against a set of allowed 
 
 Because bagit.py does not output an easy-to-read bag size apart from the Payload-Oxum, this script calculates the bag size and outputs the appropriate value and unit (TB, GB, MB, KB, or bytes).
 
-Use <code>-b --baginfo</code>, followed by the path to a text file, to bag a directory and use that text file as the basis for the resulting bag's bag-info.txt file:
+Use <code>-b/--baginfo</code>, followed by the path to a text file, to bag a directory and use that text file as the basis for the resulting bag's bag-info.txt file:
 
 <code>pybagger.py --baginfo <path_to_baginfo_txt_file></code>
 
 By default, all allowed fields identified in the <code>fieldsDict</code> dictionary are required. Fields can be made optional by changing their dictionary value to <code>False</code>.
   
-By default, the script bags the current working directory. To bag a different directory, use the <code>-d --directory</code> switch, followed by the path to that directory:
+By default, the script bags the current working directory. To bag a different directory, use the <code>-d/--directory</code> switch, followed by the path to that directory:
  
 <code>pybagger.py --baginfo <path_to_baginfo_txt_file> --directory <path_to_directory></code>
 
-Use the <code>-u --unpack</code> switch to "unbag" a bag at the target directory:
+Use the <code>-u/--unpack</code> switch to "unbag" a bag at the target directory:
   
   <code>pybagger.py -u -d <path_to_directory></code>
   
