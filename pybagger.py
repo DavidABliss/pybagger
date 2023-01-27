@@ -25,9 +25,9 @@ if not args.u:
         sys.exit('No bag-info.txt provided. Please provide a bag-info.txt file with -b/--baginfo')
 
 # Declare accepted bag-info fields and whether they are required ("True") or optional ("False")
-fieldsDict = {'Source-Organization': True, 'Organization-Address': True, 'Contact-Name': True, 'Contact-Phone': True, 
-              'Contact-Email': True, 'External-Description': True, 'External-Identifier': True, 'Internal-Sender-Description': True, 
-              'Internal-Sender-Identifier': True, 'Rights-Statement': True, 'Bag-Group-Identifier': True, 'Bag-Size': True}
+fieldsDict = {'Source-Organization': False, 'Organization-Address': False, 'Contact-Name': False, 'Contact-Phone': False, 
+              'Contact-Email': False, 'External-Description': False, 'External-Identifier': False, 'Internal-Sender-Description': False, 
+              'Internal-Sender-Identifier': False, 'Rights-Statement': False, 'Bag-Group-Identifier': False, 'Bag-Size': True}
 
 baginfoDict = {}
 # Read the user-supplied bag-info file and load the text into a dictionary
@@ -63,6 +63,7 @@ def bagInfoReader(baginfoPath):
                     
 # Bag the user-supplied directory in place. Create a UUID External-Identifier
 def bagCreator(bagPath):
+    """
     bagUUID = str(uuid.uuid4())
     # Add the UUID External-Identifier to the bag-info dictionary. If other
     # External-Identifier values are present, insert the UUID first.
@@ -70,6 +71,7 @@ def bagCreator(bagPath):
         baginfoDict['External-Identifier'] = bagUUID + ' | ' + baginfoDict['External-Identifier']
     else:
         baginfoDict['External-Identifier'] = bagUUID
+    """
     # Calculate the bag size
     baginfoDict['Bag-Size'] = sizeCalculator(bagPath)
     
