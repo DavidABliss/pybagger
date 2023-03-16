@@ -108,8 +108,14 @@ def sizeCalculator(bag):
 def bagUnpacker(bag):
     os.remove(os.path.join(bag, 'bag-info.txt'))
     os.remove(os.path.join(bag, 'bagit.txt'))
-    os.remove(os.path.join(bag, 'manifest-sha256.txt'))
-    os.remove(os.path.join(bag, 'tagmanifest-sha256.txt'))
+    try:
+        os.remove(os.path.join(bag, 'manifest-sha256.txt'))
+    except FileNotFoundError:
+        os.remove(os.path.join(bag, 'manifest-md5.txt'))
+    try:
+        os.remove(os.path.join(bag, 'tagmanifest-sha256.txt'))
+    except FileNotFoundError:
+        os.remove(os.path.join(bag, 'tagmanifest-md5.txt'))
     dataPath = os.path.join(bag,'data')
     for item in os.listdir(dataPath):
         if not item == 'data':
