@@ -1,35 +1,35 @@
 # -*- coding: utf-8 -*-
 
 import bagit
-import uuid
 import os
 import argparse
 import sys
 
 parser = argparse.ArgumentParser(description='Bag a directory, supplying an existing txt file for the bag-info.txt output')
-parser.add_argument('-d', '--directory', help="directory to be bagged", action="store", dest="d", default=os.getcwd())
+parser.add_argument('directory', help="directory to be bagged")
+parser.add_argument('-d', '--description', required=False, help="description of the contents of the directory to be bagged", action="store", dest="d")
 parser.add_argument('-b', '--baginfo', required=False, help="bag-info.txt file to included in the resulting bag", action="store", dest="b")
 parser.add_argument('-u', '--unpack', required=False, help="unpack existing bag at the directory location", action="store_true", dest="u")
 
 args = parser.parse_args()
 
-bagPath = args.d
+bagPath = args.directory
 
 if args.u:
     import shutil
 
 if not args.u:
-    try:
+    if args.b:
         bagInfo = args.b
-    except:
-        sys.exit('No bag-info.txt provided. Please provide a bag-info.txt file with -b/--baginfo')
-
+    
 # Declare accepted bag-info fields and whether they are required ("True") or optional ("False")
 fieldsDict = {'Source-Organization': False, 'Organization-Address': False, 'Contact-Name': False, 'Contact-Phone': False, 
               'Contact-Email': False, 'External-Description': False, 'External-Identifier': False, 'Internal-Sender-Description': False, 
               'Internal-Sender-Identifier': False, 'Rights-Statement': False, 'Bag-Group-Identifier': False, 'Bag-Size': True}
 
-baginfoDict = {}
+baginfoDict = {'Source-Organization': 'Carleton College Archives', 'External-Identifier': bagPath, 'Contact-Name': 'David Bliss', 'Contact-Email': 'dbliss@carleton.edu'}
+if args.d:
+    baginfoDict['External-Description'] = args.d
 # Read the user-supplied bag-info file and load the text into a dictionary
 def bagInfoReader(baginfoPath):
     with open(baginfoPath, 'r', encoding='utf-8') as baginfoFile:
@@ -143,5 +143,6 @@ if args.u:
     bagUnpacker(bagPath)
     
 else:
-    bagInfoReader(bagInfo)
+    if args.b:
+        bagInfoReader(bagInfo)
     bagCreator(bagPath)
