@@ -10,6 +10,7 @@ parser.add_argument('directory', help="directory to be bagged")
 parser.add_argument('-d', '--description', required=False, help="description of the contents of the directory to be bagged", action="store", dest="d")
 parser.add_argument('-b', '--baginfo', required=False, help="bag-info.txt file to included in the resulting bag", action="store", dest="b")
 parser.add_argument('-u', '--unpack', required=False, help="unpack existing bag at the directory location", action="store_true", dest="u")
+parser.add_argument('-v', '--validate', required=False, help="validate the bag after creating it", action="store_true", dest="v")
 
 args = parser.parse_args()
 
@@ -133,6 +134,26 @@ def bagUnpacker(bag):
         next
     print('Unpacked: ' + bag)
     
+def validator(bagPath):
+    # Test if the bag exists, then attempt to validate it, printing the results
+    try:
+        bag = bagit.Bag(bagPath)
+        print('Validating bag: ' + bagPath)
+        try: 
+            validation = bag.is_valid()
+        except bagit.BagError:
+            validation = False
+        except KeyboardInterrupt:
+            sys.exit('Validation interrupted')
+        if validation:
+            print(bagPath + ': Bag is valid\n')
+        elif validation == False:
+            print(bagPath + ": Bag is INVALID\n")
+    # If the bag does not exist, print the error and move on
+    except bagit.BagError as e:
+        print(e)
+        print('No bag found at ' + bagPath +'\n')
+    
 if args.u:
     try:
         print("WARNING: This will unpack all the bag at " + bagPath + ", moving the contents of the data directory up one level and deleting the bag-info, bagit, manifest, and tagmanifest files.") 
@@ -146,3 +167,8 @@ else:
     if args.b:
         bagInfoReader(bagInfo)
     bagCreator(bagPath)
+
+
+if args.v:
+    bagDir = args.directory
+    validator(bagDir)
