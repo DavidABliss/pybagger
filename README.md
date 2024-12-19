@@ -9,17 +9,21 @@ The script matches the contents of the input text file against a set of allowed 
 
 Because bagit.py does not output an easy-to-read bag size apart from the Payload-Oxum, this script calculates the bag size and outputs the appropriate value and unit (TB, GB, MB, KB, or bytes).
 
+Use <code>-d/--description'</code>, followed by a doublequote-enclosed text string, to add descriptive info to the <code>External-Description</code> field of the bag-info.txt file:
+	
+	<code>pybagger.py --description "Description of the contents of the bag" <path_to_directory></code>
+
 Use <code>-b/--baginfo</code>, followed by the path to a text file, to bag a directory and use that text file as the basis for the resulting bag's bag-info.txt file:
 
-<code>pybagger.py --baginfo <path_to_baginfo_txt_file> <path_to_directory></code>
+	<code>pybagger.py --baginfo <path_to_baginfo_txt_file> <path_to_directory></code>
 
 By default, the script inserts values used by the Carleton College Archives for <code>Source-Organization</code>, <code>Contact-Name</code>, and <code>Contact-Email</code> fields. The name of the bag is used as the <code>External-Identifier</code> field.
 
 By default, no fields identified in the <code>fieldsDict</code> dictionary are required, apart from the <code>Bag-Size</code> field whose value is calculated as part of the script. Fields can be made required by changing their dictionary value to <code>True</code>.
-  
-The script also allows users to supply a value for the <code>External-Identifier</code> field when running the script from the command line, using the <code>-d/--description</code> switch, followed by a description enclosed in quotes:
- 
-<code>pybagger.py --baginfo <path_to_baginfo_txt_file> --description <"Description of bag contents"></code>
+
+Use the <code>-v/--validate</code> switch to validate a bag immediately after it has been created:
+
+	<code>pybagger.py <path_to_directory_> --validate
 
 Use the <code>-u/--unpack</code> switch to "unbag" a bag at the target directory:
   
